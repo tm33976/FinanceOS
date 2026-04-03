@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0c14;
+  --surface: #0f1117;
+  --card: #141720;
+  --card-hover: #1a1d2a;
+  --border: #1e2130;
+  --border-bright: #2d3150;
+  --text: #e2e8f0;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  --accent: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.15);
+  --income: #10b981;
+  --expense: #f43f5e;
+  --income-bg: rgba(16, 185, 129, 0.08);
+  --expense-bg: rgba(244, 63, 94, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-bright);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-[var(--border)] bg-[var(--card)] p-6;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--border-bright);
+  }
+
+  .btn-primary {
+    @apply rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-all;
+    @apply hover:bg-indigo-500 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply rounded-lg border border-[var(--border-bright)] px-4 py-2 text-sm font-medium text-[var(--text-dim)] transition-all;
+    @apply hover:border-indigo-500/50 hover:text-[var(--text)] active:scale-[0.98];
+  }
+
+  .btn-danger {
+    @apply rounded-lg bg-rose-600/20 border border-rose-500/30 px-4 py-2 text-sm font-medium text-rose-400 transition-all;
+    @apply hover:bg-rose-600/30 active:scale-[0.98];
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-[var(--border-bright)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text)];
+    @apply placeholder:text-[var(--text-muted)] outline-none;
+    @apply focus:border-indigo-500/70 focus:ring-1 focus:ring-indigo-500/30;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .label {
+    @apply block text-xs font-medium text-[var(--text-muted)] mb-1.5 uppercase tracking-wider;
+  }
+
+  .page-title {
+    font-family: 'Syne', sans-serif;
+    @apply text-2xl font-bold text-[var(--text)];
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    @apply text-3xl font-bold;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+}
+
+/* Number animation */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-count {
+  animation: count-up 0.5s ease-out;
+}
+
+/* Chart.js tooltip dark theme fix */
+.chartjs-tooltip {
+  background: var(--card) !important;
+  border: 1px solid var(--border-bright) !important;
+}
