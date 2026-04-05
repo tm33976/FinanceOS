@@ -175,7 +175,10 @@ export default function RecordsPage() {
   };
 
   const updateFilter = (key: keyof RecordFilters, value: any) => {
-    setFilters((prev) => ({ ...prev, [key]: value, page: 1 }));
+    // When changing actual filters reset to page 1
+    // but when changing the page itself dont reset it back to 1
+    const shouldResetPage = key !== "page";
+    setFilters((prev) => ({ ...prev, [key]: value, ...(shouldResetPage && { page: 1 }) }));
   };
 
   const activeFilterCount = [filters.type, filters.category, filters.startDate, filters.endDate]
