@@ -1,6 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const connectDB = require("./config/database");
 
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
@@ -9,10 +11,22 @@ const dashboardRoutes = require("./routes/dashboard");
 
 const app = express();
 
+// Connect to MongoDB
+// On Vercel each function invocation may be a cold start
+// so we connect here rather than in server.js
+connectDB();
+
 // Middleware
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:3000", credentials: true }));
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  credentials: true
+}));
 app.use(express.json());
-app.use(morgan("dev"));
+
+// Only use morgan in development — Vercel logs differently
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -20,7 +34,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/records", recordRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
-// Health check
+// Health check — also used by cron job to keep warm
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 // 404 handler
