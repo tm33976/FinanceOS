@@ -16,6 +16,7 @@
   --text-dim: #94a3b8;
   --accent: #6366f1;
   --accent-glow: rgba(99, 102, 241, 0.15);
+  --accent-on-glow: #a5b4fc;
   --income: #10b981;
   --expense: #f43f5e;
   --income-bg: rgba(16, 185, 129, 0.08);
@@ -87,7 +88,7 @@ body {
   }
 
   .label {
-    @apply block text-xs font-medium text-[var(--text-muted)] mb-1.5 uppercase tracking-wider;
+    @apply block text-xs font-medium text-[var(--text-dim)] mb-1.5 uppercase tracking-wider;
   }
 
   .page-title {
